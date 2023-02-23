@@ -58,5 +58,5 @@ public class SearchGPT{
     public ChatGptResponse sendMessage(@RequestBody BotRequest botRequest) {
         return botService.askQuestion(botRequest);
     }
-    
+
 }
