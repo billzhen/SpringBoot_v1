@@ -1,12 +1,11 @@
 package com.bill.demo.config;
 
 import java.util.HashMap;
-
 public class ChatGptConfig {
 
     public static final String AUTHORIZATION = "Authorization";
     public static final String BEARER = "Bearer ";
-    public static final String API_KEY = "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";
+    public static final String API_KEY = "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";
     public static final String MODEL = "gpt-3.5-turbo-0301";
 //    public static final String MODEL = "text-davinci-003";
     public static final Integer MAX_TOKEN = 2048;

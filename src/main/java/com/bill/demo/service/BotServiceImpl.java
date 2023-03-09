@@ -44,16 +44,14 @@ public class BotServiceImpl implements BotService {
         System.out.println("Bill responseEntity: " + responseEntity);
         return responseEntity.getBody();
     }
-    public ChatGptResponse httpPost(String message){
+
+    public ChatGptResponse httpPost(ArrayList messages){
         RestTemplate restTemplate=new RestTemplate();
-        // 设置请求body
-        List<ChatMessage> messages = new ArrayList<>();  // java version agnostic
-        ChatMessage systemMessage = new ChatMessage(ChatMessageRole.SYSTEM.value(), message);
-        messages.add(systemMessage);
+
         Map<String, Object> map = new LinkedHashMap<>();
         map.put("model", ChatGptConfig.MODEL);
         map.put("max_tokens", ChatGptConfig.MAX_TOKEN);
-        map.put("messages",messages);
+        map.put("messages", messages);
         // 设置请求header
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.APPLICATION_JSON);
@@ -62,6 +60,26 @@ public class BotServiceImpl implements BotService {
 
         return restTemplate.postForObject(ChatGptConfig.URL, httpEntity, ChatGptResponse.class);
     }
+
+
+//    public ChatGptResponse httpPost(ArrayList message){
+//        RestTemplate restTemplate=new RestTemplate();
+//        // 设置请求body
+//        List<ChatMessage> messages = new ArrayList<>();  // java version agnostic
+//        ChatMessage systemMessage = new ChatMessage(ChatMessageRole.ASSISTANT.value(), message);
+//        messages.add(systemMessage);
+//        Map<String, Object> map = new LinkedHashMap<>();
+//        map.put("model", ChatGptConfig.MODEL);
+//        map.put("max_tokens", ChatGptConfig.MAX_TOKEN);
+//        map.put("messages",messages);
+//        // 设置请求header
+//        HttpHeaders header = new HttpHeaders();
+//        header.setContentType(MediaType.APPLICATION_JSON);
+//        header.add(ChatGptConfig.AUTHORIZATION, ChatGptConfig.BEARER + ChatGptConfig.API_KEY);
+//        HttpEntity<Map<String, Object>> httpEntity = new HttpEntity<>(map, header);
+//
+//        return restTemplate.postForObject(ChatGptConfig.URL, httpEntity, ChatGptResponse.class);
+//    }
 
     public ChatGptResponse askQuestion(BotRequest botRequest) {
         return httpPost(botRequest.getMessage());
