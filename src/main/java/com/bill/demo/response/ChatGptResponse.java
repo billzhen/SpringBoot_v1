@@ -16,5 +16,3 @@ public class ChatGptResponse implements Serializable {
 }
 
 
-
-

@@ -1,10 +1,14 @@
 package com.bill.demo.controller;
 
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
+import com.theokanning.openai.completion.chat.ChatMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +22,7 @@ import com.theokanning.openai.completion.CompletionChoice;
 import com.theokanning.openai.completion.CompletionRequest;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 
 @RestController
@@ -53,9 +58,14 @@ public class SearchGPT{
         response.forEach(System.out::println);
         System.out.println("Done!");
     }
+    @PostMapping("/api/stream")
+    public ResponseEntity<StreamingResponseBody> stream(@RequestBody BotRequest botRequest) throws IOException {
 
+        return new ChatGPTStream(botRequest.getMessage()).start();
+    }
     @PostMapping("/send")
     public ChatGptResponse sendMessage(@RequestBody BotRequest botRequest) {
+
         return botService.askQuestion(botRequest);
     }
 
