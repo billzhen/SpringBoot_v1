@@ -35,8 +35,6 @@ public class CreateModule {
     @RequestMapping("/create")
     public void createClass(@RequestBody ProgramRequest programRequest){
         System.out.println("Bill inside create class.");
-        System.out.println(programRequest.getProgramString());
-        System.out.println(programRequest.getClassName());
         createModuleService.createModule(programRequest);
     }
 
